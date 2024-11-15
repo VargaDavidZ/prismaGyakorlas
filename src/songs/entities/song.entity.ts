@@ -5,4 +5,5 @@ export class Song {
     hossz: number;
     ar: number;
     ertekeles: number;
+    playlistId: number
 }

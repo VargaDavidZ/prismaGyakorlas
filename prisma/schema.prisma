@@ -21,4 +21,13 @@ model Song{
   hossz Int
   ar Int @default(0)
   ertekeles Int @default(0) 
+
+  Playlist Playlist? @relation(fields: [playlistId], references: [id])
+  playlistId Int?  @default(1)
+}
+
+model Playlist{
+  id    Int    @id @default(autoincrement())
+  nev String
+  songs Song[] 
 }
