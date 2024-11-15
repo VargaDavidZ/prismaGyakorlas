@@ -36,7 +36,7 @@ export class PlaylistsService {
     );
   }
   //---------------------------
-  async addSongToList(listId:number,songId:number)
+ /* async addSongToList(listId:number,songId:number)
   {
     await this.db.song.update({
       where: {id: songId},
@@ -44,16 +44,34 @@ export class PlaylistsService {
         playlistId: listId
       }
     })
+  }*/
+
+    async addSongToList(listId:number,songId:number)
+  {
+    await this.db.playlist.update({
+      where: {id: listId},
+      data: {
+        songs: {
+          connect: {id:songId}
+        }
+      }
+    })
   }
 
 
-  async deleteSongFromList(listId:number,songId:number)//WIP
+  async deleteSongFromList(listId:number,songId:number)// works, create a _PlaylistToSong table with the PlaylistId and SongId
   {
-    await this.db.song.update({
-      where: {id: songId},
+    await this.db.playlist.update({
+      where: {id: listId},
       data: {
-        playlistId: 0
+       songs:{
+        disconnect: [{id:songId}]
+       }
+      },
+      include: {
+        songs: true
       }
+
     })
   }
 
